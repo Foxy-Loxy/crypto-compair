@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+  backend:
+    build: .
+    ports:
+      - "3000:3000"
+    env_file: ".env"
+    depends_on:
+      - db
+    restart: always
+
+  db:
+    image: mysql:5.6
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - "mysql:/var/lib/mysql"
+volumes:
+  mysql:
